@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f3ed">
+  <meta name="description" content="A little box of memories, kind words, and encouragement for Roksi.">
+  <title>A Little Box of Memories — For Roksi</title>
+  <style>
+    :root {
+      --paper: #f4f3ed;
+      --paper-deep: #ebece3;
+      --ink: #293c34;
+      --muted: #748279;
+      --sage: #6f8878;
+      --sage-dark: #4f6c5c;
+      --sage-pale: #dce7dc;
+      --blue-pale: #dceaf0;
+      --rose-pale: #f2e3df;
+      --cream: #fffdf7;
+      --line: rgba(70, 93, 78, .15);
+      --shadow: 0 22px 60px rgba(54, 72, 59, .10);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 5%, rgba(220,234,240,.72), transparent 28rem),
+        radial-gradient(circle at 95% 35%, rgba(220,231,220,.78), transparent 27rem),
+        var(--paper);
+      font-family: ui-rounded, "Avenir Next", Avenir, "Segoe UI", system-ui, sans-serif;
+      line-height: 1.65;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body::before, body::after {
+      content: ""; position: fixed; z-index: -1; pointer-events: none;
+      width: 15rem; height: 15rem; border: 1px solid rgba(111,136,120,.10); border-radius: 50%;
+    }
+    body::before { top: 8%; right: -9rem; box-shadow: 0 0 0 2rem rgba(111,136,120,.025), 0 0 0 4rem rgba(111,136,120,.02); }
+    body::after { bottom: -10rem; left: -8rem; box-shadow: 0 0 0 2rem rgba(111,136,120,.025), 0 0 0 4rem rgba(111,136,120,.02); }
+    button { font: inherit; }
+    .shell { width: min(1080px, calc(100% - 36px)); margin: 0 auto; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; padding: 25px 0 12px; gap: 16px; }
+    .brand { display: flex; gap: 10px; align-items: center; color: var(--sage-dark); font-size: .83rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 750; }
+    .brand-mark { width: 31px; height: 31px; border-radius: 50% 50% 50% 8px; transform: rotate(-12deg); background: var(--sage-pale); display: grid; place-items: center; color: var(--sage-dark); font-family: Georgia, serif; font-size: 18px; }
+    .lang-switch { display: flex; background: rgba(255,255,255,.62); border: 1px solid var(--line); border-radius: 999px; padding: 4px; gap: 3px; }
+    .lang-switch button { border: 0; padding: 7px 13px; border-radius: 999px; background: transparent; color: var(--muted); font-size: .82rem; cursor: pointer; }
+    .lang-switch button[aria-pressed="true"] { background: var(--sage-dark); color: white; }
+    .hero { text-align: center; padding: clamp(42px, 8vw, 86px) 0 52px; position: relative; }
+    .eyebrow { color: var(--sage-dark); text-transform: uppercase; letter-spacing: .18em; font-size: .72rem; font-weight: 800; }
+    h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 500; letter-spacing: -.045em; font-size: clamp(2.65rem, 7vw, 5.3rem); line-height: 1.02; max-width: 850px; margin: 17px auto 18px; }
+    .hero-sub { max-width: 560px; color: #68776d; margin: 0 auto; font-size: clamp(.98rem, 2vw, 1.12rem); }
+    .hero-art { width: 156px; height: 118px; margin: 34px auto 0; position: relative; filter: drop-shadow(0 13px 13px rgba(55,75,61,.10)); }
+    .hero-envelope { position: absolute; inset: 24px 13px 6px; background: #e7cfc5; border-radius: 8px; overflow: hidden; }
+    .hero-envelope::before { content: ""; position: absolute; inset: 0; background: linear-gradient(140deg, transparent 49.5%, #d6b8ad 50%), linear-gradient(220deg, transparent 49.5%, #e0c3b8 50%); }
+    .hero-letter { position: absolute; left: 31px; right: 31px; top: 5px; height: 78px; background: #fffdf7; border-radius: 5px; border: 1px solid #eee9dc; display: grid; place-items: center; font-family: Georgia,serif; font-style: italic; color: var(--sage-dark); font-size: 1rem; }
+    .hero-seal { position: absolute; width: 26px; height: 26px; border-radius: 50%; background: var(--sage); color: white; left: calc(50% - 13px); bottom: 19px; display: grid; place-items: center; font-size: 12px; z-index: 2; }
+    .scroll-hint { color: #89958b; font-size: .78rem; margin-top: 22px; }
+    .section-head { text-align: center; margin: 26px 0 26px; }
+    .section-head h2 { font: 500 clamp(1.8rem, 4vw, 2.55rem)/1.15 Georgia,serif; margin: 7px 0; }
+    .section-head p { margin: 0 auto; color: var(--muted); max-width: 540px; font-size: .94rem; }
+    .apology {
+      max-width: 850px; margin: 0 auto 62px; padding: clamp(25px, 5vw, 43px); border-radius: 25px;
+      background: rgba(255,253,247,.78); border: 1px solid rgba(255,255,255,.9); box-shadow: var(--shadow); position: relative; overflow: hidden;
+    }
+    .apology::after { content: ""; position: absolute; width: 170px; height: 170px; border: 1px solid rgba(111,136,120,.13); border-radius: 50%; right: -74px; bottom: -99px; box-shadow: 0 0 0 16px rgba(111,136,120,.035), 0 0 0 32px rgba(111,136,120,.025); }
+    .small-label { font-size: .7rem; text-transform: uppercase; letter-spacing: .16em; font-weight: 800; color: var(--sage-dark); }
+    .apology h2 { font: 500 clamp(1.8rem,4vw,2.55rem)/1.13 Georgia,serif; margin: 10px 0 16px; }
+    .apology p { color: #58685e; max-width: 690px; margin: 0 0 12px; position: relative; z-index: 1; }
+    .signature { margin-top: 20px; font: italic 1.2rem Georgia,serif; color: var(--sage-dark); }
+    .memory-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 17px; margin: 0 auto 75px; max-width: 930px; }
+    .envelope-card { position: relative; border: 1px solid rgba(255,255,255,.95); border-radius: 19px; background: rgba(255,253,247,.72); min-height: 182px; padding: 22px; box-shadow: 0 10px 30px rgba(54,72,59,.055); text-align: left; cursor: pointer; transition: transform .22s ease, box-shadow .22s ease, background .22s ease; display: flex; flex-direction: column; align-items: flex-start; }
+    .envelope-card:hover, .envelope-card:focus-visible { transform: translateY(-4px); box-shadow: 0 18px 38px rgba(54,72,59,.11); background: #fffdf8; outline: none; }
+    .envelope-card:focus-visible { outline: 3px solid rgba(79,108,92,.35); outline-offset: 3px; }
+    .envelope-icon { width: 43px; height: 33px; border-radius: 6px; background: var(--blue-pale); position: relative; margin-bottom: 18px; overflow: hidden; }
+    .envelope-icon::before { content: ""; position: absolute; inset: 0; background: linear-gradient(145deg, transparent 49%, rgba(94,127,133,.23) 50%), linear-gradient(215deg, transparent 49%, rgba(94,127,133,.16) 50%); }
+    .envelope-card:nth-child(3n+2) .envelope-icon { background: var(--rose-pale); }
+    .envelope-card:nth-child(3n) .envelope-icon { background: var(--sage-pale); }
+    .card-kicker { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--sage-dark); font-weight: 800; }
+    .envelope-card strong { font: 500 1.38rem/1.2 Georgia,serif; margin: 5px 0 7px; }
+    .envelope-card .card-desc { color: var(--muted); font-size: .84rem; }
+    .open-label { margin-top: auto; padding-top: 14px; color: var(--sage-dark); font-size: .78rem; font-weight: 750; }
+    .special {
+      max-width: 930px; margin: 0 auto 75px; border-radius: 25px; padding: clamp(28px,5vw,48px); text-align: center;
+      background: linear-gradient(135deg, #e4eee5, #e4eef1 60%, #f4eae5); border: 1px solid rgba(255,255,255,.9); position: relative; overflow: hidden;
+    }
+    .special::before, .special::after { content: "✦"; position: absolute; color: rgba(79,108,92,.3); font-size: 27px; }
+    .special::before { left: 8%; top: 17%; } .special::after { right: 9%; bottom: 16%; font-size: 19px; }
+    .special-date { font-size: .72rem; text-transform: uppercase; letter-spacing: .18em; color: var(--sage-dark); font-weight: 800; }
+    .special h2 { font: 500 clamp(2.2rem,6vw,3.8rem)/1.05 Georgia,serif; margin: 9px 0 18px; }
+    .special p { max-width: 650px; margin: 0 auto; color: #53675b; font: 1.05rem/1.85 Georgia,serif; }
+    .special button, .modal-close, .modal-copy { border: 0; cursor: pointer; }
+    .special button { margin-top: 24px; border-radius: 999px; background: var(--sage-dark); color: white; padding: 12px 21px; font-size: .88rem; transition: transform .2s ease, background .2s ease; }
+    .special button:hover { transform: translateY(-2px); background: #3f5c4c; }
+    .closing { max-width: 760px; margin: 0 auto 75px; text-align: center; padding: 0 10px; }
+    .closing h2 { font: 500 clamp(1.8rem,4vw,2.5rem) Georgia,serif; margin: 8px 0 13px; }
+    .closing p { color: var(--muted); margin: 0 auto; max-width: 620px; }
+    .closing .final-line { color: var(--sage-dark); font: italic 1.25rem Georgia,serif; margin-top: 18px; }
+    footer { text-align: center; color: #929c93; border-top: 1px solid var(--line); padding: 22px 12px 30px; font-size: .76rem; }
+    .modal-backdrop { display: none; position: fixed; inset: 0; z-index: 20; background: rgba(30,43,36,.48); backdrop-filter: blur(7px); padding: 18px; align-items: center; justify-content: center; }
+    .modal-backdrop.show { display: flex; animation: fadeIn .18s ease both; }
+    .letter-modal { width: min(620px,100%); max-height: min(82vh,760px); overflow-y: auto; background: #fffdf7; border-radius: 23px; padding: clamp(25px,5vw,43px); box-shadow: 0 28px 90px rgba(13,28,18,.28); position: relative; animation: rise .25s ease both; }
+    .letter-top { color: var(--sage-dark); font-size: .7rem; text-transform: uppercase; letter-spacing: .16em; font-weight: 800; padding-right: 35px; }
+    .letter-modal h2 { font: 500 clamp(2rem,5vw,2.9rem)/1.1 Georgia,serif; margin: 12px 0 7px; }
+    .letter-date { color: #9aa39a; font-size: .77rem; margin-bottom: 24px; }
+    .letter-body { color: #56665c; font: 1.06rem/1.9 Georgia,serif; white-space: pre-line; }
+    .letter-bottom { display: flex; justify-content: space-between; gap: 12px; align-items: center; border-top: 1px solid var(--line); margin-top: 27px; padding-top: 18px; }
+    .letter-sign { font: italic 1.1rem Georgia,serif; color: var(--sage-dark); }
+    .modal-close { border-radius: 999px; background: var(--sage-dark); color: white; padding: 9px 18px; font-size: .84rem; }
+    .x-close { position: absolute; top: 16px; right: 17px; width: 34px; height: 34px; border: 0; border-radius: 50%; background: var(--paper-deep); color: var(--ink); cursor: pointer; font-size: 1.1rem; }
+    .toast { position: fixed; bottom: 22px; left: 50%; transform: translate(-50%,20px); opacity: 0; background: #334b3d; color: white; padding: 9px 15px; border-radius: 999px; font-size: .82rem; z-index: 30; transition: .25s; pointer-events: none; }
+    .toast.show { opacity: 1; transform: translate(-50%,0); }
+    [dir="rtl"] { font-family: Tahoma, Arial, sans-serif; }
+    [dir="rtl"] .brand { letter-spacing: 0; }
+    [dir="rtl"] .envelope-card { text-align: right; align-items: flex-start; }
+    [dir="rtl"] .letter-top { padding-right: 0; padding-left: 35px; }
+    [dir="rtl"] .x-close { right: auto; left: 17px; }
+    [dir="rtl"] .apology::after { right: auto; left: -74px; }
+    [dir="rtl"] .letter-body { font-family: Tahoma, Arial, sans-serif; }
+    @keyframes fadeIn { from { opacity:0 } to { opacity:1 } }
+    @keyframes rise { from { opacity:0; transform:translateY(12px) scale(.99) } to { opacity:1; transform:translateY(0) scale(1) } }
+    @media (max-width: 640px) {
+      .shell { width: min(100% - 26px, 520px); }
+      .topbar { padding-top: 17px; }
+      .brand { font-size: .68rem; letter-spacing: .08em; }
+      .lang-switch button { padding: 6px 10px; }
+      .hero { padding: 54px 0 39px; }
+      .memory-grid { grid-template-columns: 1fr; gap: 12px; margin-bottom: 57px; }
+      .envelope-card { min-height: 157px; padding: 19px; }
+      .apology { margin-bottom: 52px; }
+      .special { margin-bottom: 57px; }
+      .closing { margin-bottom: 54px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+  
+    .feature-section { max-width: 960px; margin: 0 auto 72px; }
+    .counter-panel {
+      max-width: 960px; margin: 0 auto 72px; padding: clamp(25px,5vw,43px);
+      border-radius: 25px; background: linear-gradient(135deg, #e8f0e8, #e5eff2 64%, #f5ebe6);
+      border: 1px solid rgba(255,255,255,.9); box-shadow: var(--shadow); text-align: center;
+    }
+    .counter-title { font: 500 clamp(1.8rem,4vw,2.6rem)/1.15 Georgia,serif; margin: 8px 0 8px; }
+    .counter-sub { margin: 0 auto 24px; max-width: 620px; color: #627469; }
+    .counter-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px; max-width: 650px; margin: 0 auto; }
+    .counter-unit { background: rgba(255,253,247,.82); border: 1px solid rgba(255,255,255,.9); border-radius: 16px; padding: 16px 8px 13px; }
+    .counter-unit strong { display: block; font: 500 clamp(1.75rem,5vw,2.8rem)/1 Georgia,serif; color: var(--sage-dark); font-variant-numeric: tabular-nums; }
+    .counter-unit span { display: block; margin-top: 8px; color: var(--muted); font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .counter-day { margin: 18px 0 0; color: var(--sage-dark); font-weight: 750; }
+    .gentle-note { margin: 9px auto 0; max-width: 660px; color: #829087; font-size: .76rem; }
+    .timeline-list { position: relative; display: grid; gap: 13px; max-width: 800px; margin: 0 auto; }
+    .timeline-item { display: grid; grid-template-columns: 118px 1fr; gap: 16px; align-items: start; padding: 19px 21px; background: rgba(255,253,247,.77); border: 1px solid rgba(255,255,255,.94); border-radius: 17px; box-shadow: 0 9px 25px rgba(54,72,59,.045); }
+    .timeline-date { color: var(--sage-dark); font-size: .76rem; font-weight: 800; letter-spacing: .04em; }
+    .timeline-item h3, .world-card h3, .dream-card h3 { font: 500 1.22rem/1.25 Georgia,serif; margin: 0 0 5px; }
+    .timeline-item p, .world-card p, .dream-card p { color: var(--muted); margin: 0; font-size: .88rem; }
+    .world-grid, .dream-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
+    .world-card, .dream-card { padding: 21px; background: rgba(255,253,247,.78); border: 1px solid rgba(255,255,255,.95); border-radius: 18px; box-shadow: 0 9px 25px rgba(54,72,59,.045); }
+    .world-label { color: var(--sage-dark); text-transform: uppercase; letter-spacing: .13em; font-size: .66rem; font-weight: 850; display: block; margin-bottom: 8px; }
+    .world-symbol { font: 1.4rem Georgia,serif; color: var(--sage); margin-bottom: 9px; }
+    .random-panel { max-width: 800px; margin: 0 auto 72px; border-radius: 22px; padding: clamp(24px,4vw,36px); background: var(--cream); border: 1px solid rgba(255,255,255,.95); text-align: center; box-shadow: var(--shadow); }
+    .random-panel h2 { font: 500 clamp(1.7rem,4vw,2.3rem)/1.15 Georgia,serif; margin: 8px 0; }
+    .random-panel p { color: var(--muted); max-width: 560px; margin: 0 auto; }
+    .primary-action { border: 0; cursor: pointer; border-radius: 999px; background: var(--sage-dark); color: #fff; padding: 12px 21px; margin-top: 19px; font-size: .88rem; font-weight: 700; transition: transform .2s ease, background .2s ease; }
+    .primary-action:hover { transform: translateY(-2px); background: #3f5c4c; }
+    .milestone-panel { max-width: 960px; margin: 0 auto 72px; border-radius: 24px; padding: clamp(25px,5vw,42px); background: rgba(255,253,247,.82); border: 1px solid rgba(255,255,255,.95); box-shadow: var(--shadow); text-align: center; }
+    .milestone-panel h2 { font: 500 clamp(1.8rem,4vw,2.5rem)/1.15 Georgia,serif; margin: 8px 0; }
+    .milestone-panel p { color: var(--muted); max-width: 650px; margin: 0 auto; }
+    .progress-track { max-width: 580px; height: 9px; background: #e7ece5; border-radius: 99px; overflow: hidden; margin: 22px auto 10px; }
+    .progress-fill { height: 100%; width: 0; background: linear-gradient(90deg,#829b88,#9bb5bd); border-radius: inherit; transition: width .5s ease; }
+    .milestone-countdown { margin-top: 15px !important; color: var(--sage-dark) !important; font-weight: 800; font-variant-numeric: tabular-nums; }
+    .dream-note { text-align: center; color: #87938a; font-size: .78rem; margin-top: 14px !important; }
+    @media (max-width: 640px) {
+      .counter-grid { gap: 7px; }
+      .counter-unit { padding: 14px 4px 11px; border-radius: 12px; }
+      .counter-unit span { font-size: .57rem; letter-spacing: .07em; }
+      .timeline-item { grid-template-columns: 1fr; gap: 4px; padding: 17px; }
+      .world-grid, .dream-grid { grid-template-columns: 1fr; }
+      .feature-section, .counter-panel, .random-panel, .milestone-panel { margin-bottom: 55px; }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">R</span><span data-i18n="brand">A little gift for Roksi</span></div>
+      <div class="lang-switch" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="ar" aria-pressed="false">AR</button>
+        <button type="button" data-lang="pl" aria-pressed="false">PL</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="eyebrow" data-i18n="eyebrow">A LITTLE PLACE FOR YOU</div>
+        <h1 data-i18n="heroTitle">A little box<br>of memories</h1>
+        <p class="hero-sub" data-i18n="heroSub">Some moments are small, but they stay with us. I saved a few here, hoping they bring you a gentle smile.</p>
+        <div class="hero-art" aria-hidden="true"><div class="hero-letter">for Roksi</div><div class="hero-envelope"></div><div class="hero-seal">R</div></div>
+        <div class="scroll-hint" data-i18n="scrollHint">A few letters, whenever you feel like opening them</div>
+      </section>
+
+      <section class="apology" aria-labelledby="apologyTitle">
+        <div class="small-label" data-i18n="apologyLabel">A NOTE I OWE YOU</div>
+        <h2 id="apologyTitle" data-i18n="apologyTitle">I am sorry, Roksi.</h2>
+        <p data-i18n="apologyP1">I am sorry for the moments when my words, reactions, or misunderstandings hurt you. I will not try to erase those moments with a pretty page or make excuses for them.</p>
+        <p data-i18n="apologyP2">I want to learn to listen better, speak more calmly, and show care through my actions. You deserve patience, honesty, and peace. You do not owe me forgiveness, a reply, or a decision. This is a gift, not a request.</p>
+        <div class="signature" data-i18n="apologySign">— Ibrahim</div>
+      </section>
+
+      <section aria-labelledby="boxTitle">
+        <div class="section-head">
+          <div class="eyebrow" data-i18n="boxEyebrow">OPEN WHENEVER YOU WANT</div>
+          <h2 id="boxTitle" data-i18n="boxTitle">Letters for different days</h2>
+          <p data-i18n="boxSub">No order, no rules. Pick any envelope. Leave the others closed until another day.</p>
+        </div>
+        <div class="memory-grid" id="memoryGrid" aria-live="polite"></div>
+      </section>
+
+      <section class="special" aria-labelledby="specialTitle">
+        <div class="special-date" data-i18n="specialDate">NOVEMBER 11, 2026</div>
+        <h2 id="specialTitle" data-i18n="specialTitle">One little word.</h2>
+        <p data-i18n="specialText">On November 11, you told me you love me. I do not know what that means for us, and I will not decide that on your behalf. But hearing those words made me happy. I wanted to keep this moment somewhere gentle, without turning it into an expectation.</p>
+        <button type="button" id="specialOpen" data-i18n="specialButton">Read this little note</button>
+      </section>
+
+
+      <section class="counter-panel" aria-labelledby="counterTitle">
+        <div class="eyebrow" data-extra="counterEyebrow">A LITTLE COUNTER</div>
+        <h2 class="counter-title" id="counterTitle" data-extra="counterTitle">Time since August 9</h2>
+        <p class="counter-sub" data-extra="counterSub">A simple way to remember how much time has passed.</p>
+        <div class="counter-grid" aria-label="Elapsed time">
+          <div class="counter-unit"><strong id="counterDays">95</strong><span data-extra="daysLabel">Days</span></div>
+          <div class="counter-unit"><strong id="counterHours">00</strong><span data-extra="hoursLabel">Hours</span></div>
+          <div class="counter-unit"><strong id="counterMinutes">00</strong><span data-extra="minutesLabel">Minutes</span></div>
+          <div class="counter-unit"><strong id="counterSeconds">00</strong><span data-extra="secondsLabel">Seconds</span></div>
+        </div>
+        <p class="counter-day" id="counterOrdinal">Day 96</p>
+        <p class="gentle-note" data-extra="counterNote">Counting from midnight on August 9 because exact start time was not recorded. This is a date marker, not a promise or expectation.</p>
+      </section>
+
+      <section class="feature-section" aria-labelledby="timelineTitle">
+        <div class="section-head">
+          <div class="eyebrow" data-extra="timelineEyebrow">THE STORY SO FAR</div>
+          <h2 id="timelineTitle" data-extra="timelineTitle">Little moments along the way</h2>
+          <p data-extra="timelineSub">A few dates and moments worth remembering.</p>
+        </div>
+        <div class="timeline-list" id="timelineList"></div>
+      </section>
+
+      <section class="feature-section" aria-labelledby="worldTitle">
+        <div class="section-head">
+          <div class="eyebrow" data-extra="worldEyebrow">A FEW THINGS I REMEMBER</div>
+          <h2 id="worldTitle" data-extra="worldTitle">Roksi's little world</h2>
+          <p data-extra="worldSub">Small details you shared with me, remembered with care.</p>
+        </div>
+        <div class="world-grid" id="worldGrid"></div>
+      </section>
+
+      <section class="random-panel" aria-labelledby="randomTitle">
+        <div class="eyebrow" data-extra="randomEyebrow">A SMALL SURPRISE</div>
+        <h2 id="randomTitle" data-extra="randomTitle">A memory, picked for you</h2>
+        <p data-extra="randomSub">Open one random letter from the memory box.</p>
+        <button class="primary-action" type="button" id="randomMemory" data-extra="randomButton">Surprise me</button>
+      </section>
+
+      <section class="feature-section" aria-labelledby="dreamTitle">
+        <div class="section-head">
+          <div class="eyebrow" data-extra="dreamEyebrow">YOUR NEXT CHAPTER</div>
+          <h2 id="dreamTitle" data-extra="dreamTitle">Little wishes for your future</h2>
+          <p data-extra="dreamSub">Good things I hope life brings your way.</p>
+        </div>
+        <div class="dream-grid" id="dreamGrid"></div>
+        <p class="dream-note" data-extra="dreamNote">These are wishes for you, not promises you owe anyone.</p>
+      </section>
+
+      <section class="milestone-panel" aria-labelledby="milestoneTitle">
+        <div class="eyebrow" data-extra="milestoneEyebrow">A SMALL MILESTONE</div>
+        <h2 id="milestoneTitle" data-extra="milestoneTitle">The 100th day</h2>
+        <p data-extra="milestoneSub">A small marker for the date I keep as the beginning: August 9, 2026.</p>
+        <div class="progress-track" role="progressbar" aria-label="Progress toward 100 days" aria-valuemin="0" aria-valuemax="100" aria-valuenow="96" id="milestoneProgressBar">
+          <div class="progress-fill" id="milestoneProgress"></div>
+        </div>
+        <p class="counter-day" id="milestoneDay">Day 96 of 100</p>
+        <p class="milestone-countdown" id="milestoneCountdown">4 days until November 16, 2026</p>
+        <p class="gentle-note" data-extra="milestoneNote">No deadline, no pressure — simply a date worth noticing.</p>
+      </section>
+
+      <section class="closing">
+        <div class="eyebrow" data-i18n="closingEyebrow">ONE LAST THING</div>
+        <h2 data-i18n="closingTitle">Your life is yours to grow.</h2>
+        <p data-i18n="closingText">Keep learning, rest when you need to, laugh often, and keep moving toward the future you want. I hope you find support, safety, and happiness in every chapter ahead.</p>
+        <p class="final-line" data-i18n="closingLine">You matter, beyond any story between us.</p>
+      </section>
+    </main>
+    <footer data-i18n="footer">Made with care. No reply expected. Take all the time you need.</footer>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop" role="presentation">
+    <article class="letter-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalBody">
+      <button class="x-close" type="button" id="xClose" aria-label="Close">×</button>
+      <div class="letter-top" id="modalKicker"></div>
+      <h2 id="modalTitle"></h2>
+      <div class="letter-date" id="modalDate"></div>
+      <div class="letter-body" id="modalBody"></div>
+      <div class="letter-bottom"><span class="letter-sign" data-i18n="letterSign">With care, Ibrahim</span><button class="modal-close" type="button" id="modalClose" data-i18n="closeButton">Close letter</button></div>
+    </article>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const content = {
+      en: {
+        brand: "A little gift for Roksi", eyebrow: "A LITTLE PLACE FOR YOU", heroTitle: "A little box<br>of memories",
+        heroSub: "Some moments are small, but they stay with us. I saved a few here, hoping they bring you a gentle smile.",
+        scrollHint: "A few letters, whenever you feel like opening them", apologyLabel: "A NOTE I OWE YOU", apologyTitle: "I am sorry, Roksi.",
+        apologyP1: "I am sorry for the moments when my words, reactions, or misunderstandings hurt you. I will not try to erase those moments with a pretty page or make excuses for them.",
+        apologyP2: "I want to learn to listen better, speak more calmly, and show care through my actions. You deserve patience, honesty, and peace. You do not owe me forgiveness, a reply, or a decision. This is a gift, not a request.",
+        apologySign: "— Ibrahim", boxEyebrow: "OPEN WHENEVER YOU WANT", boxTitle: "Letters for different days", boxSub: "No order, no rules. Pick any envelope. Leave the others closed until another day.",
+        specialDate: "NOVEMBER 11, 2026", specialTitle: "One little word.",
+        specialText: "On November 11, you told me you love me. I do not know what that means for us, and I will not decide that on your behalf. But hearing those words made me happy. I wanted to keep this moment somewhere gentle, without turning it into an expectation.",
+        specialButton: "Read this little note", closingEyebrow: "ONE LAST THING", closingTitle: "Your life is yours to grow.",
+        closingText: "Keep learning, rest when you need to, laugh often, and keep moving toward the future you want. I hope you find support, safety, and happiness in every chapter ahead.",
+        closingLine: "You matter, beyond any story between us.", footer: "Made with care. No reply expected. Take all the time you need.",
+        letterSign: "With care, Ibrahim", closeButton: "Close letter", openLabel: "Open letter →", dateLabel: "A MEMORY FROM",
+        letters: [
+          {id:"smile", kicker:"OPEN WHEN YOU NEED A SMILE", title:"The names we gave each other", date:"August 3, 2026", desc:"Ibi, Ibiś, and Roksi.", body:"Do you remember when you asked whether you could call me by a Polish diminutive? You suggested ‘Ibi’ and ‘Ibiś’. And ‘Roksi’ became the name I loved calling you.\n\nSuch a tiny conversation at the beginning, but it gave us our own little way of saying hello. I hope it still makes you smile."},
+          {id:"february", kicker:"OPEN WHEN YOU REMEMBER FEBRUARY", title:"Our little February idea", date:"August 3, 2026", desc:"Two birthdays, one shared date.", body:"We found out our birthdays were both in February: mine on the 11th and yours on the 20th. I got excited and suggested February 15 — a little day between our birthdays, just for us to celebrate together.\n\nIt was a simple, spontaneous idea. I remember how happy that conversation felt."},
+          {id:"laugh", kicker:"OPEN WHEN YOU WANT TO LAUGH", title:"The goalkeeper and the girl", date:"August 3, 2026", desc:"A little football teasing.", body:"You mentioned going to the pitch to play football. I told you I was a goalkeeper, and then I joked that I was talking to a cute girl. When you asked who she was, I gave you clues: beautiful hair, a lovely smile, talks a lot, and plays football.\n\nYou knew who I meant. I still like that silly little moment."},
+          {id:"captain", kicker:"OPEN WHEN YOU DOUBT YOURSELF", title:"Something we made together", date:"August 5, 2026", desc:"The little captain website.", body:"You shared the idea for a page for your captain, along with photos and videos. I started putting it together and wanted to make it special. When you saw it, you told me it was so good and that you did not know how much it helped you.\n\nI was glad I could use something I know to make something meaningful for you. I hope you keep bringing your ideas to life."},
+          {id:"study", kicker:"OPEN WHEN SCHOOL FEELS HEAVY", title:"One step at a time", date:"August 18–23, 2026", desc:"Your studies and the future ahead.", body:"I remember you telling me how school, exams, and the future could feel overwhelming. You worried that you might not have enough time for everything.\n\nI wanted you to know then — and I still hope you know now — that your education and your dreams matter. You do not have to be available every minute to deserve kindness. Rest, study, ask for help, and take things one step at a time. I believe you can make yourself proud."},
+          {id:"goodnight", kicker:"OPEN WHEN YOU MISS A GOODNIGHT", title:"The ‘I love you more’ contest", date:"September 23, 2026", desc:"A tiny message that became a memory.", body:"I remember your messages: ‘SLEEP GOOD’, ‘GOOD NIGHT’, ‘YOUR GF TEXT TO YOU’, and then ‘LOVE YOU’. I replied that I loved you more, and you insisted: ‘I love u more’.\n\nIt was such a small exchange, but it felt warm. I am keeping the sweetness of that moment, without asking it to promise anything about today."}
+        ],
+        specialLetter: {kicker:"A MOMENT I WANTED TO KEEP", title:"November 11", date:"November 11, 2026", body:"On November 11, you said ‘I love you’ for the first time in a long while. I do not want to assume what comes next, or put a label on something you have not defined.\n\nI only want you to know that hearing it brought me real happiness. Thank you for that moment. I hope whatever happens, we can treat each other with kindness and honesty."}
+      },
+      ar: {
+        brand: "هدية صغيرة لروكسي", eyebrow: "مساحة صغيرة إلك", heroTitle: "صندوق صغير<br>من الذكريات", heroSub: "في لحظات بسيطة بتضل معنا. جمعتلك بعضها هون، على أمل ترسم ابتسامة هادئة على وجهك.",
+        scrollHint: "رسائل صغيرة، افتحيها وقت ما تحبي", apologyLabel: "رسالة اعتذار", apologyTitle: "أنا آسف يا روكسي.",
+        apologyP1: "آسف عن اللحظات اللي جرحتك فيها كلماتي أو ردود أفعالي أو سوء فهمنا لبعض. مش رح أحاول أمحي هاللحظات بصفحة جميلة أو أقدّم أعذار عنها.",
+        apologyP2: "بدي أتعلم أسمعك بشكل أفضل، وأحكي بهدوء أكثر، وأثبت اهتمامي بالأفعال. إنتِ بتستحقي الصبر والصدق والراحة. مش مطالبة تسامحيني أو تردّي أو تاخدي أي قرار. هاي هدية، مش طلب.",
+        apologySign: "— إبراهيم", boxEyebrow: "افتحي وقت ما تحبي", boxTitle: "رسائل لأيام مختلفة", boxSub: "ما في ترتيب أو قواعد. اختاري أي ظرف، وخلي الباقي لوقت ثاني.",
+        specialDate: "11 نوفمبر 2026", specialTitle: "كلمة صغيرة.",
+        specialText: "يوم 11 نوفمبر قلتيلي إنك بتحبيني. أنا مش عارف شو معناها بالنسبة إلنا، ومش رح أقرر عنك. بس سماع هالكلمات أسعدني. حبيت أحفظ هاللحظة بمكان لطيف، بدون ما أحوّلها لتوقع أو طلب.",
+        specialButton: "افتحي الرسالة الصغيرة", closingEyebrow: "شغلة أخيرة", closingTitle: "حياتك ومستقبلك إلك.",
+        closingText: "كمّلي تعلّم، ارتاحي لما تحتاجي، اضحكي كثير، وامشي باتجاه المستقبل اللي بتحلمي فيه. بتمنالك الدعم والأمان والسعادة بكل مرحلة جاية.",
+        closingLine: "إنتِ مهمة، بعيدًا عن أي حكاية بيننا.", footer: "هدية بمحبة. مش مطلوب منك أي رد. خدي كل وقتك.",
+        letterSign: "بكل تقدير، إبراهيم", closeButton: "إغلاق الرسالة", openLabel: "افتحي الرسالة ←", dateLabel: "ذكرى من",
+        letters: [
+          {id:"smile", kicker:"افتحي لما تحتاجي ابتسامة", title:"الأسماء اللي اخترناها لبعض", date:"3 أغسطس 2026", desc:"إيبي، إيبيش، وروكسي.", body:"بتتذكري لما سألتي إذا بتقدري تناديني باسم دلع بولندي؟ اقترحتي Ibi وIbiś، وصار اسم Roksi من الأسماء اللي بحب أناديكي فيها.\n\nكانت محادثة صغيرة ببداية تعارفنا، لكنها أعطتنا طريقة خاصة ننادي فيها بعض. بتمنى لسه بتخليكي تبتسمي."},
+          {id:"february", kicker:"افتحي لما تتذكري فبراير", title:"فكرتنا الصغيرة لشهر فبراير", date:"3 أغسطس 2026", desc:"عيدان ميلاد ويوم مشترك.", body:"اكتشفنا إن أعياد ميلادنا بنفس الشهر: ميلادي يوم 11 وميلادك يوم 20 فبراير. تحمست واقترحت يوم 15 فبراير، يوم بالنص بين عيدينا، نحتفل فيه سوا.\n\nكانت فكرة عفوية وبسيطة. بتذكر قديش كانت هالمحادثة لطيفة."},
+          {id:"laugh", kicker:"افتحي لما بدك تضحكي", title:"حارس المرمى والبنت", date:"3 أغسطس 2026", desc:"مزحة صغيرة عن كرة القدم.", body:"حكيتيلي إنك ممكن تروحي الملعب وتلعبي كرة قدم. قلتلك إني حارس مرمى، وبعدها مزحت إني بحكي مع بنت لطيفة. سألتي مين هي، وصرت أعطيكي أوصاف: شعرها جميل، وابتسامتها حلوة، وبتحكي كثير، وبتلعب كرة قدم.\n\nعرفتي مين قصدي. ولسه بحب أتذكر هالموقف المضحك."},
+          {id:"captain", kicker:"افتحي لما تشكي بقدراتك", title:"شيء صنعناه سوا", date:"5 أغسطس 2026", desc:"موقع صغير لقائدتك.", body:"شاركتي معي فكرتك عن صفحة لقائدتك، وبعتيلي صور وفيديوهات. بلشت أرتب الموقع وحبيت أعمله بشكل مميز. ولما شفتيه قلتي إنه جميل، وإنك مش متخيلة قديش ساعدتك.\n\nانبسطت إني استخدمت شغلة بعرفها حتى أعمل إشي إله معنى عندك. بتمنى تظلي تحولي أفكارك لأشياء حقيقية."},
+          {id:"study", kicker:"افتحي لما الدراسة تتعبك", title:"خطوة خطوة", date:"18–23 أغسطس 2026", desc:"دراستك وقلقك من المستقبل.", body:"بتذكر لما حكيتيلي قديش المدرسة والامتحانات والتفكير بالمستقبل ممكن يكونوا متعبين، وإنك خايفة ما تلاقي وقت لكل شيء.\n\nكنت بدي تعرفي وقتها، ولسه بتمنى تعرفي اليوم، إن تعليمك وأحلامك مهمين. مش لازم تكوني متاحة كل دقيقة حتى تستحقي الاهتمام. ارتاحي، وادرسي، واطلبي المساعدة لما تحتاجي، وخدي الأمور خطوة خطوة. أنا مؤمن إنك قادرة تفرحي بنفسك وبإنجازاتك."},
+          {id:"goodnight", kicker:"افتحي لما تشتاقي لتصبح على خير", title:"مسابقة «بحبك أكثر»", date:"23 سبتمبر 2026", desc:"رسائل صغيرة صارت ذكرى.", body:"بتذكر رسائلك: ‘SLEEP GOOD’ و‘GOOD NIGHT’ و‘YOUR GF TEXT TO YOU’ وبعدها ‘LOVE YOU’. رديت إني بحبك أكثر، وإنتِ أصرّيتي: ‘I love u more’.\n\nكانت محادثة قصيرة، لكنها كانت دافئة. بحب أحتفظ بحلاوة هاللحظة، بدون ما أطلب منها توعدنا بأي شيء عن اليوم."}
+        ],
+        specialLetter: {kicker:"لحظة حبيت أحتفظ فيها", title:"11 نوفمبر", date:"11 نوفمبر 2026", body:"يوم 11 نوفمبر قلتيلي «أحبك» لأول مرة من فترة طويلة. مش بدي أفترض شو ممكن يصير بعد هيك، أو أعطي اسم لشيء إنتِ ما حددتيه.\n\nبس بدي تعرفي إن سماعها أسعدني من قلبي. شكرًا على هاللحظة. بتمنى مهما صار نضل نتعامل مع بعض بلطف وصدق."}
+      }
+    };
+
+    content.pl = {
+      brand: "Mały prezent dla Roksi", eyebrow: "MAŁE MIEJSCE DLA CIEBIE", heroTitle: "Małe pudełko<br>wspomnień",
+      heroSub: "Niektóre chwile są krótkie, ale zostają z nami na długo. Zachowałem tu kilka z nich, mając nadzieję, że wywołają na Twojej twarzy delikatny uśmiech.",
+      scrollHint: "Kilka listów — otwórz je, kiedy masz ochotę", apologyLabel: "SŁOWA, KTÓRE CI SIĘ NALEŻĄ", apologyTitle: "Przepraszam, Roksi.",
+      apologyP1: "Przepraszam za chwile, w których moje słowa, reakcje lub nieporozumienia sprawiły Ci przykrość. Nie chcę przykrywać tych chwil ładną stroną ani szukać dla nich wymówek.",
+      apologyP2: "Chcę nauczyć się lepiej słuchać, spokojniej rozmawiać i okazywać troskę czynami. Zasługujesz na cierpliwość, szczerość i spokój. Nie musisz mi wybaczać, odpisywać ani podejmować żadnej decyzji. To prezent, nie prośba.",
+      apologySign: "— Ibrahim", boxEyebrow: "OTWÓRZ, KIEDY ZECHCESZ", boxTitle: "Listy na różne dni", boxSub: "Nie ma kolejności ani zasad. Wybierz dowolną kopertę. Pozostałe mogą poczekać na inny dzień.",
+      specialDate: "11 LISTOPADA 2026", specialTitle: "Jedno małe słowo.",
+      specialText: "11 listopada powiedziałaś mi, że mnie kochasz. Nie wiem, co to oznacza dla nas, i nie będę decydować za Ciebie. Ale usłyszenie tych słów sprawiło mi radość. Chciałem zachować tę chwilę w spokojnym miejscu, bez zamieniania jej w oczekiwanie.",
+      specialButton: "Przeczytaj tę małą wiadomość", closingEyebrow: "JESZCZE JEDNA RZECZ", closingTitle: "Twoje życie należy do Ciebie.",
+      closingText: "Ucz się, odpoczywaj, kiedy tego potrzebujesz, często się śmiej i idź w stronę przyszłości, o której marzysz. Życzę Ci wsparcia, bezpieczeństwa i szczęścia na każdym kolejnym etapie.",
+      closingLine: "Jesteś ważna — niezależnie od tego, co będzie z naszą historią.", footer: "Stworzone z troską. Nie musisz odpowiadać. Daj sobie tyle czasu, ile potrzebujesz.",
+      letterSign: "Z troską, Ibrahim", closeButton: "Zamknij list", openLabel: "Otwórz list →", dateLabel: "WSPOMNIENIE Z",
+      letters: [
+        {id:"smile", kicker:"OTWÓRZ, KIEDY POTRZEBUJESZ UŚMIECHU", title:"Nasze zdrobnienia", date:"3 sierpnia 2026", desc:"Ibi, Ibiś i Roksi.", body:`Pamiętasz, jak zapytałaś, czy możesz nazywać mnie po polsku zdrobniale? Zaproponowałaś „Ibi” i „Ibiś”. A „Roksi” stało się imieniem, którym tak lubiłem Cię nazywać.
+
+To była drobna rozmowa na początku naszej znajomości, ale dała nam nasz własny, mały sposób zwracania się do siebie. Mam nadzieję, że nadal wywołuje uśmiech.`},
+        {id:"february", kicker:"OTWÓRZ, KIEDY WSPOMINASZ LUTY", title:"Nasz mały lutowy pomysł", date:"3 sierpnia 2026", desc:"Dwie daty urodzin i jeden wspólny dzień.", body:`Odkryliśmy, że nasze urodziny są w lutym: moje 11., a Twoje 20. dnia miesiąca. Ucieszyłem się i zaproponowałem 15 lutego — dzień pomiędzy naszymi urodzinami, który moglibyśmy świętować razem.
+
+To był prosty, spontaniczny pomysł. Pamiętam, jak miło było wtedy rozmawiać.`},
+        {id:"laugh", kicker:"OTWÓRZ, KIEDY CHCESZ SIĘ POŚMIAĆ", title:"Bramkarz i dziewczyna", date:"3 sierpnia 2026", desc:"Małe żarty o piłce nożnej.", body:`Mówiłaś, że może pójdziesz na boisko pograć w piłkę. Powiedziałem, że jestem bramkarzem, a potem zażartowałem, że rozmawiam z pewną uroczą dziewczyną. Zapytałaś, kim jest, więc podałem wskazówki: ma piękne włosy, śliczny uśmiech, dużo mówi i gra w piłkę.
+
+Wiedziałaś, o kim mówię. Nadal lubię wspominać ten głupiutki moment.`},
+        {id:"captain", kicker:"OTWÓRZ, KIEDY W SIEBIE WĄTPISZ", title:"Coś, co stworzyliśmy razem", date:"5 sierpnia 2026", desc:"Mała strona dla Twojej kapitan.", body:`Opowiedziałaś mi o pomyśle na stronę dla Twojej kapitan, a potem wysłałaś zdjęcia i filmy. Zacząłem ją tworzyć i chciałem, żeby była wyjątkowa. Kiedy ją zobaczyłaś, powiedziałaś, że jest świetna i że nawet nie wiem, jak bardzo Ci pomogłem.
+
+Cieszyłem się, że mogłem wykorzystać to, co umiem, żeby stworzyć coś ważnego dla Ciebie. Mam nadzieję, że nadal będziesz realizować swoje pomysły.`},
+        {id:"study", kicker:"OTWÓRZ, KIEDY NAUKA CIĘ PRZYTŁACZA", title:"Krok po kroku", date:"18–23 sierpnia 2026", desc:"Twoja nauka i przyszłość.", body:`Pamiętam, jak mówiłaś, że szkoła, egzaminy i myślenie o przyszłości potrafią przytłaczać. Martwiłaś się, że nie wystarczy Ci czasu na wszystko.
+
+Chciałem wtedy — i nadal chcę — żebyś wiedziała, że Twoja edukacja i marzenia są ważne. Nie musisz być dostępna w każdej chwili, żeby zasługiwać na życzliwość. Odpoczywaj, ucz się, proś o pomoc i rób wszystko krok po kroku. Wierzę, że będziesz z siebie dumna.`},
+        {id:"goodnight", kicker:"OTWÓRZ, KIEDY TĘSKNISZ ZA DOBRANOC", title:"Konkurs na „kocham cię bardziej”", date:"23 września 2026", desc:"Mała rozmowa, która stała się wspomnieniem.", body:`Pamiętam Twoje wiadomości: „SLEEP GOOD”, „GOOD NIGHT”, „YOUR GF TEXT TO YOU”, a potem „LOVE YOU”. Odpowiedziałem, że kocham Cię bardziej, a Ty upierałaś się: „I love u more”.
+
+To była krótka wymiana zdań, ale pełna ciepła. Chcę zachować jej słodycz, nie oczekując, że będzie coś obiecywać na dziś.`}
+      ],
+      specialLetter: {kicker:"CHWILA, KTÓRĄ CHCIAŁEM ZACHOWAĆ", title:"11 listopada", date:"11 listopada 2026", body:`11 listopada powiedziałaś „kocham cię” po raz pierwszy od długiego czasu. Nie chcę zakładać, co będzie dalej, ani nadawać nazwy czemuś, czego sama nie określiłaś.
+
+Chcę tylko, żebyś wiedziała, że te słowa naprawdę mnie uszczęśliwiły. Dziękuję za tę chwilę. Mam nadzieję, że bez względu na to, co się wydarzy, będziemy traktować się z życzliwością i szczerością.`}
+    };
+
+
+    const extraContent = {
+      en: {
+        counterEyebrow: "A LITTLE COUNTER", counterTitle: "Time since August 9", counterSub: "A simple way to remember how much time has passed.",
+        daysLabel: "Days", hoursLabel: "Hours", minutesLabel: "Minutes", secondsLabel: "Seconds", counterDayPrefix: "Day", counterNote: "Counting from midnight on August 9 because exact start time was not recorded. This is a date marker, not a promise or expectation.",
+        timelineEyebrow: "THE STORY SO FAR", timelineTitle: "Little moments along the way", timelineSub: "The first conversations came before the date I mark as our beginning.",
+        timeline: [
+          {date:"August 3, 2026", title:"First little conversations", text:"Our saved chat begins here — with names, questions, jokes, and the first time ‘Ibi’ and ‘Ibiś’ came up."},
+          {date:"August 5, 2026", title:"A little project together", text:"We worked on a page for your captain, adding ideas, photos, and videos one piece at a time."},
+          {date:"August 9, 2026", title:"The date I mark as our beginning", text:"The date you gave me to count from. A small marker in our story, held gently."},
+          {date:"September 23, 2026", title:"The ‘I love you more’ moment", text:"Your goodnight messages turned into our tiny competition: who loved the other more."},
+          {date:"November 11, 2026", title:"One little word", text:"You said ‘I love you’ after a long time. I wanted to remember the happiness that moment brought me."}
+        ],
+        worldEyebrow:"A FEW THINGS I REMEMBER", worldTitle:"Roksi's little world", worldSub:"Small details you shared with me, remembered with care.",
+        world: [
+          {label:"Your colours", title:"Green & light blue", text:"When I asked about favourite colours, you chose green and light blue."},
+          {label:"Football", title:"Juventus & the pitch", text:"You told me you support Juventus, and we talked about football and going to the pitch."},
+          {label:"Languages", title:"Polish, English & more", text:"You told me you speak Polish and English, and know a little Spanish, Albanian, and German."},
+          {label:"Your next chapter", title:"School & university", text:"You shared how much your exams, studies, and thoughts about university mattered to you."}
+        ],
+        randomEyebrow:"A SMALL SURPRISE", randomTitle:"A memory, picked for you", randomSub:"Open one random letter from the memory box.", randomButton:"Surprise me",
+        dreamEyebrow:"YOUR NEXT CHAPTER", dreamTitle:"Little wishes for your future", dreamSub:"Good things I hope life brings your way.", dreamNote:"These are wishes for you, not promises you owe anyone.",
+        dreams: [
+          {title:"Your exams", text:"May you feel prepared, steady, and proud of the effort you put in."},
+          {title:"University", text:"May you find a path that excites you and opens doors for your future."},
+          {title:"Your own pace", text:"May you have enough time to rest, breathe, and take care of yourself."},
+          {title:"Football & joy", text:"May you keep the people, hobbies, and little things that make you feel like yourself."}
+        ],
+        milestoneEyebrow:"A SMALL MILESTONE", milestoneTitle:"The 100th day", milestoneSub:"A small marker for the date I keep as the beginning: August 9, 2026.", milestoneDayPrefix:"Day", milestoneOf:"of", milestoneNote:"No deadline, no pressure — simply a date worth noticing.",
+        countdownBefore:"until November 16, 2026", countdownToday:"Today marks the 100th day.", countdownAfter:"The 100-day mark has passed. The memories can stay without creating expectations."
+      },
+      ar: {
+        counterEyebrow:"عداد صغير", counterTitle:"الوقت منذ 9 أغسطس", counterSub:"طريقة بسيطة لتذكّر الوقت اللي مرّ.",
+        daysLabel:"يوم", hoursLabel:"ساعة", minutesLabel:"دقيقة", secondsLabel:"ثانية", counterDayPrefix:"اليوم", counterNote:"الحساب يبدأ من منتصف ليلة 9 أغسطس لأن وقت البداية الدقيق مش مسجّل. هذا تاريخ للذكرى، مش وعد أو توقع.",
+        timelineEyebrow:"حكايتنا حتى الآن", timelineTitle:"لحظات صغيرة بالطريق", timelineSub:"أول محادثاتنا كانت قبل التاريخ اللي بعتبره بداية حكايتنا.",
+        timeline: [
+          {date:"3 أغسطس 2026", title:"أول المحادثات الصغيرة", text:"المحادثة المحفوظة عندي بتبدأ هون: أسماء وأسئلة ومزاح، وأول مرة ظهرت فيها Ibi وIbiś."},
+          {date:"5 أغسطس 2026", title:"مشروع صغير عملناه سوا", text:"اشتغلنا على صفحة لقائدة فريقك، وأضفنا أفكار وصور وفيديوهات بالتدريج."},
+          {date:"9 أغسطس 2026", title:"التاريخ اللي بعتبره بداية حكايتنا", text:"التاريخ اللي طلبت مني أحسب منه. علامة صغيرة بذكرياتنا، بدون أي ضغط."},
+          {date:"23 سبتمبر 2026", title:"لحظة «بحبك أكثر»", text:"رسائل تصبح على خير تحولت لمسابقة صغيرة: مين بحب الثاني أكثر؟"},
+          {date:"11 نوفمبر 2026", title:"كلمة صغيرة", text:"قلتي «أحبك» بعد فترة طويلة. حبيت أحتفظ بالسعادة اللي جابتها إليّ هاللحظة."}
+        ],
+        worldEyebrow:"تفاصيل بتذكرها", worldTitle:"عالم Roksi الصغير", worldSub:"تفاصيل صغيرة شاركتيني فيها، وبتذكرها بمحبة واحترام.",
+        world: [
+          {label:"ألوانك", title:"الأخضر والأزرق الفاتح", text:"لما سألتك عن ألوانك المفضلة، اخترتي الأخضر والأزرق الفاتح."},
+          {label:"كرة القدم", title:"يوفنتوس والملعب", text:"حكيتيلي إنك بتشجعي يوفنتوس، وحكينا عن كرة القدم والذهاب للملعب."},
+          {label:"اللغات", title:"البولندية والإنجليزية وغيرها", text:"حكيتيلي إنك بتحكي بولندي وإنجليزي، وبتعرفي شوي إسباني وألباني وألماني."},
+          {label:"مرحلتك القادمة", title:"المدرسة والجامعة", text:"شاركتي معي قديش امتحاناتك ودراستك والتفكير بالجامعة أمور مهمة عندك."}
+        ],
+        randomEyebrow:"مفاجأة صغيرة", randomTitle:"ذكرى اخترتها إلك", randomSub:"افتحي رسالة عشوائية من صندوق الذكريات.", randomButton:"فاجئني بذكرى",
+        dreamEyebrow:"فصلك القادم", dreamTitle:"أمنيات صغيرة لمستقبلك", dreamSub:"أشياء حلوة بتمنى الحياة تجيبها بطريقك.", dreamNote:"هاي أمنيات إلك، مش وعود مطلوبة منك لأي شخص.",
+        dreams: [
+          {title:"امتحاناتك", text:"بتمنى تدخلي امتحاناتك وأنتِ مستعدة وهادية وفخورة بتعبك."},
+          {title:"الجامعة", text:"بتمنى تلاقي التخصص والطريق اللي يحمّسوك ويفتحوا أبواب لمستقبلك."},
+          {title:"وقتك الخاص", text:"بتمنى تلاقي وقت كافي ترتاحي وتتنفسي وتهتمي بحالك."},
+          {title:"كرة القدم والفرح", text:"بتمنى تظلي قريبة من الناس والهوايات والتفاصيل اللي بتخليك إنتِ."}
+        ],
+        milestoneEyebrow:"محطة صغيرة", milestoneTitle:"اليوم المئة", milestoneSub:"علامة صغيرة للتاريخ اللي بعتبره بداية حكايتنا: 9 أغسطس 2026.", milestoneDayPrefix:"اليوم", milestoneOf:"من", milestoneNote:"ما في موعد نهائي ولا ضغط — مجرد تاريخ حلو نتذكره.",
+        countdownBefore:"متبقي حتى 16 نوفمبر 2026", countdownToday:"اليوم هو اليوم المئة.", countdownAfter:"مرّ اليوم المئة. بتقدر الذكريات تضل حلوة بدون ما تصير توقعات أو التزامات."
+      },
+      pl: {
+        counterEyebrow:"MAŁY LICZNIK", counterTitle:"Czas od 9 sierpnia", counterSub:"Prosty sposób, by pamiętać, ile czasu minęło.",
+        daysLabel:"Dni", hoursLabel:"Godziny", minutesLabel:"Minuty", secondsLabel:"Sekundy", counterDayPrefix:"Dzień", counterNote:"Liczymy od północy 9 sierpnia, ponieważ dokładna godzina początku nie została zapisana. To data do zapamiętania, nie obietnica ani oczekiwanie.",
+        timelineEyebrow:"NASZA HISTORIA DO TEJ PORY", timelineTitle:"Małe chwile po drodze", timelineSub:"Pierwsze rozmowy odbyły się przed datą, którą uznaję za początek naszej historii.",
+        timeline: [
+          {date:"3 sierpnia 2026", title:"Pierwsze małe rozmowy", text:"Tutaj zaczyna się zachowany czat — od imion, pytań, żartów i propozycji „Ibi” oraz „Ibiś”."},
+          {date:"5 sierpnia 2026", title:"Mały wspólny projekt", text:"Pracowaliśmy nad stroną dla Twojej kapitan, dodając pomysły, zdjęcia i filmy krok po kroku."},
+          {date:"9 sierpnia 2026", title:"Data, którą uznaję za początek", text:"Data, od której poprosiłaś mnie liczyć. Mały znacznik w naszej historii, bez żadnej presji."},
+          {date:"23 września 2026", title:"Chwila „kocham cię bardziej”", text:"Wiadomości na dobranoc zamieniły się w nasz mały konkurs: kto kocha bardziej."},
+          {date:"11 listopada 2026", title:"Jedno małe słowo", text:"Po długim czasie powiedziałaś „kocham cię”. Chciałem zapamiętać radość, którą przyniosła mi ta chwila."}
+        ],
+        worldEyebrow:"KILKA RZECZY, KTÓRE PAMIĘTAM", worldTitle:"Mały świat Roksi", worldSub:"Drobne szczegóły, którymi się ze mną podzieliłaś — zapamiętane z troską.",
+        world: [
+          {label:"Twoje kolory", title:"Zieleń i jasny błękit", text:"Kiedy zapytałem o ulubione kolory, wybrałaś zieleń i jasny błękit."},
+          {label:"Piłka nożna", title:"Juventus i boisko", text:"Powiedziałaś, że kibicujesz Juventusowi. Rozmawialiśmy też o piłce i wyjściu na boisko."},
+          {label:"Języki", title:"Polski, angielski i inne", text:"Mówiłaś, że znasz polski i angielski, a także trochę hiszpańskiego, albańskiego i niemieckiego."},
+          {label:"Twój kolejny etap", title:"Szkoła i studia", text:"Opowiadałaś, jak ważne są dla Ciebie egzaminy, nauka i myślenie o studiach."}
+        ],
+        randomEyebrow:"MAŁA NIESPODZIANKA", randomTitle:"Wspomnienie wybrane dla Ciebie", randomSub:"Otwórz losowy list z pudełka wspomnień.", randomButton:"Zaskocz mnie",
+        dreamEyebrow:"TWÓJ KOLEJNY ETAP", dreamTitle:"Małe życzenia na przyszłość", dreamSub:"Dobre rzeczy, które mam nadzieję, że przyniesie Ci życie.", dreamNote:"To życzenia dla Ciebie, nie obietnice, które jesteś komuś winna.",
+        dreams: [
+          {title:"Twoje egzaminy", text:"Obyś czuła się przygotowana, spokojna i dumna ze swojego wysiłku."},
+          {title:"Studia", text:"Obyś znalazła ścieżkę, która Cię inspiruje i otwiera drzwi do przyszłości."},
+          {title:"Własne tempo", text:"Obyś miała dość czasu na odpoczynek, oddech i troskę o siebie."},
+          {title:"Piłka i radość", text:"Obyś zachowała ludzi, pasje i drobiazgi, dzięki którym jesteś sobą."}
+        ],
+        milestoneEyebrow:"MAŁY KAMIEŃ MILOWY", milestoneTitle:"Setny dzień", milestoneSub:"Mały znacznik daty, którą uznaję za początek: 9 sierpnia 2026.", milestoneDayPrefix:"Dzień", milestoneOf:"z", milestoneNote:"Bez terminu i presji — po prostu data warta zapamiętania.",
+        countdownBefore:"do 16 listopada 2026", countdownToday:"Dziś przypada setny dzień.", countdownAfter:"Setny dzień już minął. Wspomnienia mogą pozostać miłe, bez tworzenia oczekiwań."
+      }
+    };
+
+    let currentLang = 'en';
+    const grid = document.getElementById('memoryGrid');
+    const backdrop = document.getElementById('modalBackdrop');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalKicker = document.getElementById('modalKicker');
+    const modalDate = document.getElementById('modalDate');
+    const modalBody = document.getElementById('modalBody');
+    let lastFocus = null;
+
+    function renderCards() {
+      const t = content[currentLang];
+      grid.innerHTML = '';
+      t.letters.forEach((letter, index) => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'envelope-card';
+        card.setAttribute('aria-label', `${letter.kicker}: ${letter.title}`);
+        card.innerHTML = `<span class="envelope-icon" aria-hidden="true"></span><span class="card-kicker">${letter.kicker}</span><strong>${letter.title}</strong><span class="card-desc">${letter.desc}</span><span class="open-label">${t.openLabel}</span>`;
+        card.addEventListener('click', () => openLetter(letter));
+        grid.appendChild(card);
+      });
+    }
+
+
+    function renderExtras() {
+      const t = extraContent[currentLang];
+      const timeline = document.getElementById('timelineList');
+      timeline.innerHTML = '';
+      t.timeline.forEach(item => {
+        const row = document.createElement('article');
+        row.className = 'timeline-item';
+        const date = document.createElement('div');
+        date.className = 'timeline-date';
+        date.textContent = item.date;
+        const body = document.createElement('div');
+        const title = document.createElement('h3');
+        title.textContent = item.title;
+        const copy = document.createElement('p');
+        copy.textContent = item.text;
+        body.append(title, copy);
+        row.append(date, body);
+        timeline.appendChild(row);
+      });
+
+      const world = document.getElementById('worldGrid');
+      world.innerHTML = '';
+      t.world.forEach((item, index) => {
+        const card = document.createElement('article');
+        card.className = 'world-card';
+        const symbol = document.createElement('div');
+        symbol.className = 'world-symbol';
+        symbol.textContent = ['✳', '◇', '文', '↗'][index] || '✦';
+        const label = document.createElement('span');
+        label.className = 'world-label';
+        label.textContent = item.label;
+        const title = document.createElement('h3');
+        title.textContent = item.title;
+        const copy = document.createElement('p');
+        copy.textContent = item.text;
+        card.append(symbol, label, title, copy);
+        world.appendChild(card);
+      });
+
+      const dreams = document.getElementById('dreamGrid');
+      dreams.innerHTML = '';
+      t.dreams.forEach((item, index) => {
+        const card = document.createElement('article');
+        card.className = 'dream-card';
+        const symbol = document.createElement('div');
+        symbol.className = 'world-symbol';
+        symbol.textContent = ['01', '02', '03', '04'][index] || '✦';
+        const title = document.createElement('h3');
+        title.textContent = item.title;
+        const copy = document.createElement('p');
+        copy.textContent = item.text;
+        card.append(symbol, title, copy);
+        dreams.appendChild(card);
+      });
+    }
+
+    const startDate = new Date(2026, 7, 9, 0, 0, 0);
+    const hundredthDay = new Date(2026, 10, 16, 0, 0, 0);
+    const oneDayMs = 24 * 60 * 60 * 1000;
+
+    function updateCounter() {
+      const now = new Date();
+      const elapsed = Math.max(0, now.getTime() - startDate.getTime());
+      const elapsedDays = Math.floor(elapsed / oneDayMs);
+      const remainder = Math.floor((elapsed % oneDayMs) / 1000);
+      const hours = Math.floor(remainder / 3600);
+      const minutes = Math.floor((remainder % 3600) / 60);
+      const seconds = remainder % 60;
+      const t = extraContent[currentLang];
+      const dayNumber = elapsedDays + 1;
+
+      document.getElementById('counterDays').textContent = elapsedDays;
+      document.getElementById('counterHours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('counterMinutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('counterSeconds').textContent = String(seconds).padStart(2, '0');
+      document.getElementById('counterOrdinal').textContent = `${t.counterDayPrefix} ${dayNumber}`;
+
+      const progress = Math.min(100, dayNumber);
+      document.getElementById('milestoneProgress').style.width = `${progress}%`;
+      const progressBar = document.getElementById('milestoneProgressBar');
+      progressBar.setAttribute('aria-valuenow', String(progress));
+      document.getElementById('milestoneDay').textContent = `${t.milestoneDayPrefix} ${Math.min(100, dayNumber)} ${t.milestoneOf} 100`;
+
+      const countdown = document.getElementById('milestoneCountdown');
+      if (now >= hundredthDay && now < new Date(2026, 10, 17, 0, 0, 0)) {
+        countdown.textContent = t.countdownToday;
+      } else if (now < hundredthDay) {
+        const left = hundredthDay.getTime() - now.getTime();
+        const d = Math.floor(left / oneDayMs);
+        const h = Math.floor((left % oneDayMs) / 3600000);
+        const m = Math.floor((left % 3600000) / 60000);
+        const sec = Math.floor((left % 60000) / 1000);
+        countdown.textContent = `${d}d ${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m ${String(sec).padStart(2,'0')}s ${t.countdownBefore}`;
+      } else {
+        countdown.textContent = t.countdownAfter;
+      }
+    }
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      const t = content[lang];
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+      const extras = extraContent[lang];
+      document.querySelectorAll('[data-extra]').forEach(el => {
+        const key = el.getAttribute('data-extra');
+        if (extras[key] !== undefined) el.textContent = extras[key];
+      });
+      document.querySelectorAll('[data-lang]').forEach(btn => btn.setAttribute('aria-pressed', String(btn.dataset.lang === lang)));
+      renderCards();
+      renderExtras();
+      updateCounter();
+    }
+
+    function openLetter(letter) {
+      lastFocus = document.activeElement;
+      modalKicker.textContent = letter.kicker;
+      modalTitle.textContent = letter.title;
+      modalDate.textContent = `${content[currentLang].dateLabel} ${letter.date}`;
+      modalBody.textContent = letter.body;
+      backdrop.classList.add('show');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('xClose').focus();
+    }
+    function closeLetter() {
+      backdrop.classList.remove('show');
+      document.body.style.overflow = '';
+      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+    }
+    function openSpecial() { openLetter(content[currentLang].specialLetter); }
+
+    document.querySelectorAll('[data-lang]').forEach(btn => btn.addEventListener('click', () => setLanguage(btn.dataset.lang)));
+    document.getElementById('specialOpen').addEventListener('click', openSpecial);
+    document.getElementById('randomMemory').addEventListener('click', () => {
+      const letters = content[currentLang].letters;
+      const letter = letters[Math.floor(Math.random() * letters.length)];
+      openLetter(letter);
+    });
+    window.setInterval(updateCounter, 1000);
+    document.getElementById('xClose').addEventListener('click', closeLetter);
+    document.getElementById('modalClose').addEventListener('click', closeLetter);
+    backdrop.addEventListener('click', event => { if (event.target === backdrop) closeLetter(); });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape' && backdrop.classList.contains('show')) closeLetter(); });
+    setLanguage('en');
+  </script>
+</body>
+</html>
